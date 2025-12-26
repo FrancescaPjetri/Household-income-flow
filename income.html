@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Household Income Flow Analysis</title>
+    <!-- Caricamento della libreria Plotly.js dal CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <!-- Contenitore del grafico -->
+    <div id="sankey-chart" style="width:1000px; height:600px;"></div>
+
+    <script>
+        // 1. DATASET
+        var data = [{
+            type: "sankey",
+            orientation: "h",
+            node: {
+                pad: 15,
+                thickness: 20,
+                line: {
+                    color: "black",
+                    width: 0.5
+                },
+                label: ["Income", "Taxes", "Savings", "Expenses", "Housing", "Food & Utilities", "Leisure"],
+                color: ["#10b981", "#ef4444", "#10b981", "#3b82f6", "#1e40af", "#1e40af", "#1e40af"]
+            },
+            link: {
+                source: [0, 0, 0, 3, 3, 3],
+                target: [1, 2, 3, 4, 5, 6],
+                value:  [25, 15, 60, 30, 20, 10],
+                color: [
+                    'rgba(239, 68, 68, 0.3)',  // Taxes (Red)
+                    'rgba(16, 185, 129, 0.3)', // Savings (Green)
+                    'rgba(59, 130, 246, 0.3)', // Expenses (Blue)
+                    'rgba(30, 64, 175, 0.2)',  // Housing (Dark Blue)
+                    'rgba(30, 64, 175, 0.2)',  // Food (Dark Blue)
+                    'rgba(30, 64, 175, 0.2)'   // Leisure (Dark Blue)
+                ]
+            }
+        }];
+
+        // 2. LAYOUT & ANATOMY
+        var layout = {
+            title: {
+                text: "<b>HOUSEHOLD INCOME FLOW ANALYSIS (2024)</b><br><span style='font-size:12px'>Visualizing the distribution of Gross Income into Savings and Expenditures</span>",
+                font: {
+                    family: "Arial, sans-serif",
+                    size: 18
+                }
+            },
+            font: {
+                size: 12,
+                family: "Arial, sans-serif"
+            },
+            width: 1000,
+            height: 600,
+            template: "plotly_white",
+            annotations: [{
+                text: "Source: US Bureau of Labor Statistics (Consumer Expenditure Survey).",
+                showarrow: false,
+                xref: "paper",
+                yref: "paper",
+                x: 1,
+                y: -0.1,
+                font: {
+                    size: 10,
+                    color: "black"
+                }
+            }]
+        };
+
+        // 3. GENERAZIONE DEL GRAFICO
+        Plotly.newPlot('sankey-chart', data, layout);
+    </script>
+</body>
+</html>
